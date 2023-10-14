@@ -12,3 +12,11 @@ output:
 ## Project thoughts
 
 I am interested in exploring data related to the correlation between performance and money spent by professional soccer clubs, and finding out whether they have a direct correlation or not.
+
+
+
+## Finding Data and Writing a Proposal
+
+In the world of soccer, is there a direct correlation between money spent by clubs and performance? In this study, I plan to examine whether or not the money that clubs spend on transfers for players has a direct correlation with the performance of the team: total wins, trophies won, and rank in the league. I hypothesize that, generally, the clubs that spend more money on transfers are the ones who have the most success. I believe there will be a correlation because when more money is spent, the players in the club are generally at a higher level and have more impact into performance of the team as a whole. My sample is composed of all transfers made by clubs in the English Premier League from 1992-2022. The explanatory variable of interest is success which is composed of club's total wins, trophies won, and rank in the league and whether or not there is a correlation to money spent on transfers. We can consider a club successful based off of these success statistics and then we can compare that success to how much money the club has spent. We want to see if the higher spending clubs generally have more success. For example, Manchester City is a relatively new powerhouse in soccer now, but only after they had a Saudi Arabian owner take over in the 2000s and pump lots of money into the club. We want to see if this is a general trend in soccer or if this is a peculiar example. If there are enough examples that disprove this theory, which would be low-spending clubs that have high success or high-spending clubs that have low success, we can consider our hypothesis disproved. However, if the majority of clubs follow this trend, we can consider our hypothesis to be true.
+
+
