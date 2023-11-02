@@ -19,4 +19,51 @@ I am interested in exploring data related to the correlation between performance
 
 In the world of soccer, is there a direct correlation between money spent by clubs and performance? In this study, I plan to examine whether or not the money that clubs spend on transfers for players has a direct correlation with the performance of the team: total wins, trophies won, and rank in the league. I hypothesize that, generally, the clubs that spend more money on transfers are the ones who have the most success. I believe there will be a correlation because when more money is spent, the players in the club are generally at a higher level and have more impact into performance of the team as a whole. My sample is composed of all transfers made by clubs in the English Premier League from 1992-2022. The explanatory variable of interest is success which is composed of club's total wins, trophies won, and rank in the league and whether or not there is a correlation to money spent on transfers. We can consider a club successful based off of these success statistics and then we can compare that success to how much money the club has spent. We want to see if the higher spending clubs generally have more success. For example, Manchester City is a relatively new powerhouse in soccer now, but only after they had a Saudi Arabian owner take over in the 2000s and pump lots of money into the club. We want to see if this is a general trend in soccer or if this is a peculiar example. If there are enough examples that disprove this theory, which would be low-spending clubs that have high success or high-spending clubs that have low success, we can consider our hypothesis disproved. However, if the majority of clubs follow this trend, we can consider our hypothesis to be true.
 
+## Creating the Dataset
+
+```{r}
+library(tidyverse)
+
+club <- c(
+  "Man United", "Arsenal", "Liverpool", "Chelsea", "Tottenham", "Man City", "Everton", "Newcastle United", "Aston Villa", "West Ham", "Southampton", "Blackburn", "Leicester City", "Leeds United", "Fulham", "Middlesbrough", "Crystal Palace", "Sunderland", "Bolton", "West Brom", "Stoke City", "Coventry City", "Norwich City", "Wolverhampton", "Sheffield Wednesday", "Wimbledon", "Charlton Athletic", "Wigan Athletic", "Burnley", "Swansea City", "QPR", "Portsmouth", "Birmingham City", "Brighton", "Nottingham Forrest", "Watford", "Derby County", "Bournemouth", "Ipswich Town", "Sheffield United", "Hull City", "Reading", "Brentford", "Oldham Athletic", "Cardiff City", "Bradford City", "Huddersfield Town", "Blackpool", "Barnsley", "Swindon Town")
+
+games <- c(
+  1200,1200,1200,1200,1200,1010,1200,1082,1086,1044,924,696,650,582,618,574,550,608,494,494,380,354,392,352,316,316,304,304,314,266,278,266,266,238,246,304,266,238,202,208,190,114,886,84,76,76,76,38,38,42)
+
+wins <- c(
+  731,652,635,632,528,509,429,406,379,350,280,262,218,223,180,165,159,153,149,117,116,99,99,104,101,99,93,85,84,82,81,79,73,71,71,73,68,68,57,53,41,32,31,22,17,14,12,10,10,5)
+
+points <- c(
+  2456,2249,2199,2194,1873,1742,1620,1498,1441,1312,1088,970,821,820,704,664,621,618,575,490,457,409,402,401,392,391,361,331,329,312,308,302,301,288,287,285,274,256,224,210,171,119,118,89,64,62,53,39,35,30)
+
+sum_transfers <- c(
+  3179,2496,3074,4594,2671,3441,1967,1751,1512,1664,1373,529,1192,785,639,398,591,725,202,418,371,146,277,821,101,71,123,266,330,497,182,298,160,643,261,554,127,436,57,161,217,39,93,5,101,19,126,6,7,2)
+
+epldata <- data.frame(
+  club = club, 
+  games = games, 
+  wins = wins, 
+  points = points, 
+  sum_transfers = sum_transfers)
+```
+
+## Creating Visualizations
+
+```{r}
+knitr::kable(epldata,
+             col.names = c("Club", "Total Games Played", "Total Wins", "Total Points", "Total Spent in Tranfers (in Millions)"))
+```
+
+```{r}
+epldata_plot <- epldata |>
+  ggplot(mapping = aes(x = points, y = sum_transfers)) +
+  labs(
+    x = "Total Points",
+    y = "Total Spent in Transfers (in Millions)",
+    title = "Relationship between Performance and Total Money Spent by Clubs in EPL") +
+  geom_line()
+epldata_plot
+```
+
+
 

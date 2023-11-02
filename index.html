@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","TransfersData/1-bundesliga.csv","TransfersData/championship.csv","TransfersData/eredivisie.csv","TransfersData/liga-nos.csv","TransfersData/ligue-1.csv","TransfersData/premier-league.csv","TransfersData/premier-liga.csv","TransfersData/primera-division.csv","TransfersData/serie-a.csv"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","TransfersData/1-bundesliga.csv","TransfersData/championship.csv","TransfersData/eredivisie.csv","TransfersData/liga-nos.csv","TransfersData/ligue-1.csv","TransfersData/premier-league.csv","TransfersData/premier-liga.csv","TransfersData/primera-division.csv","TransfersData/serie-a.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1521,6 +1521,424 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>I am interested in exploring data related to the correlation between performance and money spent by professional soccer clubs, and finding out whether they have a direct correlation or not.</p>
 <h2 id="finding-data-and-writing-a-proposal">Finding Data and Writing a Proposal</h2>
 <p>In the world of soccer, is there a direct correlation between money spent by clubs and performance? In this study, I plan to examine whether or not the money that clubs spend on transfers for players has a direct correlation with the performance of the team: total wins, trophies won, and rank in the league. I hypothesize that, generally, the clubs that spend more money on transfers are the ones who have the most success. I believe there will be a correlation because when more money is spent, the players in the club are generally at a higher level and have more impact into performance of the team as a whole. My sample is composed of all transfers made by clubs in the English Premier League from 1992-2022. The explanatory variable of interest is success which is composed of club’s total wins, trophies won, and rank in the league and whether or not there is a correlation to money spent on transfers. We can consider a club successful based off of these success statistics and then we can compare that success to how much money the club has spent. We want to see if the higher spending clubs generally have more success. For example, Manchester City is a relatively new powerhouse in soccer now, but only after they had a Saudi Arabian owner take over in the 2000s and pump lots of money into the club. We want to see if this is a general trend in soccer or if this is a peculiar example. If there are enough examples that disprove this theory, which would be low-spending clubs that have high success or high-spending clubs that have low success, we can consider our hypothesis disproved. However, if the majority of clubs follow this trend, we can consider our hypothesis to be true.</p>
+<h2 id="creating-the-dataset">Creating the Dataset</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>club</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"Man United"</span>, <span class='st'>"Arsenal"</span>, <span class='st'>"Liverpool"</span>, <span class='st'>"Chelsea"</span>, <span class='st'>"Tottenham"</span>, <span class='st'>"Man City"</span>, <span class='st'>"Everton"</span>, <span class='st'>"Newcastle United"</span>, <span class='st'>"Aston Villa"</span>, <span class='st'>"West Ham"</span>, <span class='st'>"Southampton"</span>, <span class='st'>"Blackburn"</span>, <span class='st'>"Leicester City"</span>, <span class='st'>"Leeds United"</span>, <span class='st'>"Fulham"</span>, <span class='st'>"Middlesbrough"</span>, <span class='st'>"Crystal Palace"</span>, <span class='st'>"Sunderland"</span>, <span class='st'>"Bolton"</span>, <span class='st'>"West Brom"</span>, <span class='st'>"Stoke City"</span>, <span class='st'>"Coventry City"</span>, <span class='st'>"Norwich City"</span>, <span class='st'>"Wolverhampton"</span>, <span class='st'>"Sheffield Wednesday"</span>, <span class='st'>"Wimbledon"</span>, <span class='st'>"Charlton Athletic"</span>, <span class='st'>"Wigan Athletic"</span>, <span class='st'>"Burnley"</span>, <span class='st'>"Swansea City"</span>, <span class='st'>"QPR"</span>, <span class='st'>"Portsmouth"</span>, <span class='st'>"Birmingham City"</span>, <span class='st'>"Brighton"</span>, <span class='st'>"Nottingham Forrest"</span>, <span class='st'>"Watford"</span>, <span class='st'>"Derby County"</span>, <span class='st'>"Bournemouth"</span>, <span class='st'>"Ipswich Town"</span>, <span class='st'>"Sheffield United"</span>, <span class='st'>"Hull City"</span>, <span class='st'>"Reading"</span>, <span class='st'>"Brentford"</span>, <span class='st'>"Oldham Athletic"</span>, <span class='st'>"Cardiff City"</span>, <span class='st'>"Bradford City"</span>, <span class='st'>"Huddersfield Town"</span>, <span class='st'>"Blackpool"</span>, <span class='st'>"Barnsley"</span>, <span class='st'>"Swindon Town"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>games</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='fl'>1200</span>,<span class='fl'>1200</span>,<span class='fl'>1200</span>,<span class='fl'>1200</span>,<span class='fl'>1200</span>,<span class='fl'>1010</span>,<span class='fl'>1200</span>,<span class='fl'>1082</span>,<span class='fl'>1086</span>,<span class='fl'>1044</span>,<span class='fl'>924</span>,<span class='fl'>696</span>,<span class='fl'>650</span>,<span class='fl'>582</span>,<span class='fl'>618</span>,<span class='fl'>574</span>,<span class='fl'>550</span>,<span class='fl'>608</span>,<span class='fl'>494</span>,<span class='fl'>494</span>,<span class='fl'>380</span>,<span class='fl'>354</span>,<span class='fl'>392</span>,<span class='fl'>352</span>,<span class='fl'>316</span>,<span class='fl'>316</span>,<span class='fl'>304</span>,<span class='fl'>304</span>,<span class='fl'>314</span>,<span class='fl'>266</span>,<span class='fl'>278</span>,<span class='fl'>266</span>,<span class='fl'>266</span>,<span class='fl'>238</span>,<span class='fl'>246</span>,<span class='fl'>304</span>,<span class='fl'>266</span>,<span class='fl'>238</span>,<span class='fl'>202</span>,<span class='fl'>208</span>,<span class='fl'>190</span>,<span class='fl'>114</span>,<span class='fl'>886</span>,<span class='fl'>84</span>,<span class='fl'>76</span>,<span class='fl'>76</span>,<span class='fl'>76</span>,<span class='fl'>38</span>,<span class='fl'>38</span>,<span class='fl'>42</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>wins</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='fl'>731</span>,<span class='fl'>652</span>,<span class='fl'>635</span>,<span class='fl'>632</span>,<span class='fl'>528</span>,<span class='fl'>509</span>,<span class='fl'>429</span>,<span class='fl'>406</span>,<span class='fl'>379</span>,<span class='fl'>350</span>,<span class='fl'>280</span>,<span class='fl'>262</span>,<span class='fl'>218</span>,<span class='fl'>223</span>,<span class='fl'>180</span>,<span class='fl'>165</span>,<span class='fl'>159</span>,<span class='fl'>153</span>,<span class='fl'>149</span>,<span class='fl'>117</span>,<span class='fl'>116</span>,<span class='fl'>99</span>,<span class='fl'>99</span>,<span class='fl'>104</span>,<span class='fl'>101</span>,<span class='fl'>99</span>,<span class='fl'>93</span>,<span class='fl'>85</span>,<span class='fl'>84</span>,<span class='fl'>82</span>,<span class='fl'>81</span>,<span class='fl'>79</span>,<span class='fl'>73</span>,<span class='fl'>71</span>,<span class='fl'>71</span>,<span class='fl'>73</span>,<span class='fl'>68</span>,<span class='fl'>68</span>,<span class='fl'>57</span>,<span class='fl'>53</span>,<span class='fl'>41</span>,<span class='fl'>32</span>,<span class='fl'>31</span>,<span class='fl'>22</span>,<span class='fl'>17</span>,<span class='fl'>14</span>,<span class='fl'>12</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>5</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>points</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='fl'>2456</span>,<span class='fl'>2249</span>,<span class='fl'>2199</span>,<span class='fl'>2194</span>,<span class='fl'>1873</span>,<span class='fl'>1742</span>,<span class='fl'>1620</span>,<span class='fl'>1498</span>,<span class='fl'>1441</span>,<span class='fl'>1312</span>,<span class='fl'>1088</span>,<span class='fl'>970</span>,<span class='fl'>821</span>,<span class='fl'>820</span>,<span class='fl'>704</span>,<span class='fl'>664</span>,<span class='fl'>621</span>,<span class='fl'>618</span>,<span class='fl'>575</span>,<span class='fl'>490</span>,<span class='fl'>457</span>,<span class='fl'>409</span>,<span class='fl'>402</span>,<span class='fl'>401</span>,<span class='fl'>392</span>,<span class='fl'>391</span>,<span class='fl'>361</span>,<span class='fl'>331</span>,<span class='fl'>329</span>,<span class='fl'>312</span>,<span class='fl'>308</span>,<span class='fl'>302</span>,<span class='fl'>301</span>,<span class='fl'>288</span>,<span class='fl'>287</span>,<span class='fl'>285</span>,<span class='fl'>274</span>,<span class='fl'>256</span>,<span class='fl'>224</span>,<span class='fl'>210</span>,<span class='fl'>171</span>,<span class='fl'>119</span>,<span class='fl'>118</span>,<span class='fl'>89</span>,<span class='fl'>64</span>,<span class='fl'>62</span>,<span class='fl'>53</span>,<span class='fl'>39</span>,<span class='fl'>35</span>,<span class='fl'>30</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>sum_transfers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='fl'>3179</span>,<span class='fl'>2496</span>,<span class='fl'>3074</span>,<span class='fl'>4594</span>,<span class='fl'>2671</span>,<span class='fl'>3441</span>,<span class='fl'>1967</span>,<span class='fl'>1751</span>,<span class='fl'>1512</span>,<span class='fl'>1664</span>,<span class='fl'>1373</span>,<span class='fl'>529</span>,<span class='fl'>1192</span>,<span class='fl'>785</span>,<span class='fl'>639</span>,<span class='fl'>398</span>,<span class='fl'>591</span>,<span class='fl'>725</span>,<span class='fl'>202</span>,<span class='fl'>418</span>,<span class='fl'>371</span>,<span class='fl'>146</span>,<span class='fl'>277</span>,<span class='fl'>821</span>,<span class='fl'>101</span>,<span class='fl'>71</span>,<span class='fl'>123</span>,<span class='fl'>266</span>,<span class='fl'>330</span>,<span class='fl'>497</span>,<span class='fl'>182</span>,<span class='fl'>298</span>,<span class='fl'>160</span>,<span class='fl'>643</span>,<span class='fl'>261</span>,<span class='fl'>554</span>,<span class='fl'>127</span>,<span class='fl'>436</span>,<span class='fl'>57</span>,<span class='fl'>161</span>,<span class='fl'>217</span>,<span class='fl'>39</span>,<span class='fl'>93</span>,<span class='fl'>5</span>,<span class='fl'>101</span>,<span class='fl'>19</span>,<span class='fl'>126</span>,<span class='fl'>6</span>,<span class='fl'>7</span>,<span class='fl'>2</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>epldata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  club <span class='op'>=</span> <span class='va'>club</span>, </span>
+<span>  games <span class='op'>=</span> <span class='va'>games</span>, </span>
+<span>  wins <span class='op'>=</span> <span class='va'>wins</span>, </span>
+<span>  points <span class='op'>=</span> <span class='va'>points</span>, </span>
+<span>  sum_transfers <span class='op'>=</span> <span class='va'>sum_transfers</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="creating-visualizations">Creating Visualizations</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>epldata</span>,</span>
+<span>             col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Club"</span>, <span class='st'>"Total Games Played"</span>, <span class='st'>"Total Wins"</span>, <span class='st'>"Total Points"</span>, <span class='st'>"Total Spent in Tranfers (in Millions)"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 18%" />
+<col style="width: 10%" />
+<col style="width: 12%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Club</th>
+<th style="text-align: right;">Total Games Played</th>
+<th style="text-align: right;">Total Wins</th>
+<th style="text-align: right;">Total Points</th>
+<th style="text-align: right;">Total Spent in Tranfers (in Millions)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Man United</td>
+<td style="text-align: right;">1200</td>
+<td style="text-align: right;">731</td>
+<td style="text-align: right;">2456</td>
+<td style="text-align: right;">3179</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arsenal</td>
+<td style="text-align: right;">1200</td>
+<td style="text-align: right;">652</td>
+<td style="text-align: right;">2249</td>
+<td style="text-align: right;">2496</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Liverpool</td>
+<td style="text-align: right;">1200</td>
+<td style="text-align: right;">635</td>
+<td style="text-align: right;">2199</td>
+<td style="text-align: right;">3074</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chelsea</td>
+<td style="text-align: right;">1200</td>
+<td style="text-align: right;">632</td>
+<td style="text-align: right;">2194</td>
+<td style="text-align: right;">4594</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tottenham</td>
+<td style="text-align: right;">1200</td>
+<td style="text-align: right;">528</td>
+<td style="text-align: right;">1873</td>
+<td style="text-align: right;">2671</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Man City</td>
+<td style="text-align: right;">1010</td>
+<td style="text-align: right;">509</td>
+<td style="text-align: right;">1742</td>
+<td style="text-align: right;">3441</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Everton</td>
+<td style="text-align: right;">1200</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: right;">1620</td>
+<td style="text-align: right;">1967</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Newcastle United</td>
+<td style="text-align: right;">1082</td>
+<td style="text-align: right;">406</td>
+<td style="text-align: right;">1498</td>
+<td style="text-align: right;">1751</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aston Villa</td>
+<td style="text-align: right;">1086</td>
+<td style="text-align: right;">379</td>
+<td style="text-align: right;">1441</td>
+<td style="text-align: right;">1512</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">West Ham</td>
+<td style="text-align: right;">1044</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: right;">1312</td>
+<td style="text-align: right;">1664</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Southampton</td>
+<td style="text-align: right;">924</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">1088</td>
+<td style="text-align: right;">1373</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Blackburn</td>
+<td style="text-align: right;">696</td>
+<td style="text-align: right;">262</td>
+<td style="text-align: right;">970</td>
+<td style="text-align: right;">529</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leicester City</td>
+<td style="text-align: right;">650</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">821</td>
+<td style="text-align: right;">1192</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leeds United</td>
+<td style="text-align: right;">582</td>
+<td style="text-align: right;">223</td>
+<td style="text-align: right;">820</td>
+<td style="text-align: right;">785</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fulham</td>
+<td style="text-align: right;">618</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">704</td>
+<td style="text-align: right;">639</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Middlesbrough</td>
+<td style="text-align: right;">574</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">664</td>
+<td style="text-align: right;">398</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Crystal Palace</td>
+<td style="text-align: right;">550</td>
+<td style="text-align: right;">159</td>
+<td style="text-align: right;">621</td>
+<td style="text-align: right;">591</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sunderland</td>
+<td style="text-align: right;">608</td>
+<td style="text-align: right;">153</td>
+<td style="text-align: right;">618</td>
+<td style="text-align: right;">725</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bolton</td>
+<td style="text-align: right;">494</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: right;">575</td>
+<td style="text-align: right;">202</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">West Brom</td>
+<td style="text-align: right;">494</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">490</td>
+<td style="text-align: right;">418</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stoke City</td>
+<td style="text-align: right;">380</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">457</td>
+<td style="text-align: right;">371</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coventry City</td>
+<td style="text-align: right;">354</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">409</td>
+<td style="text-align: right;">146</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Norwich City</td>
+<td style="text-align: right;">392</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">277</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wolverhampton</td>
+<td style="text-align: right;">352</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">401</td>
+<td style="text-align: right;">821</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sheffield Wednesday</td>
+<td style="text-align: right;">316</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">392</td>
+<td style="text-align: right;">101</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wimbledon</td>
+<td style="text-align: right;">316</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">391</td>
+<td style="text-align: right;">71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Charlton Athletic</td>
+<td style="text-align: right;">304</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">361</td>
+<td style="text-align: right;">123</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wigan Athletic</td>
+<td style="text-align: right;">304</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">331</td>
+<td style="text-align: right;">266</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Burnley</td>
+<td style="text-align: right;">314</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">330</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Swansea City</td>
+<td style="text-align: right;">266</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">312</td>
+<td style="text-align: right;">497</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">QPR</td>
+<td style="text-align: right;">278</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">308</td>
+<td style="text-align: right;">182</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portsmouth</td>
+<td style="text-align: right;">266</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">302</td>
+<td style="text-align: right;">298</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Birmingham City</td>
+<td style="text-align: right;">266</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">301</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brighton</td>
+<td style="text-align: right;">238</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">643</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nottingham Forrest</td>
+<td style="text-align: right;">246</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">287</td>
+<td style="text-align: right;">261</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Watford</td>
+<td style="text-align: right;">304</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Derby County</td>
+<td style="text-align: right;">266</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">127</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bournemouth</td>
+<td style="text-align: right;">238</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">436</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ipswich Town</td>
+<td style="text-align: right;">202</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">57</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sheffield United</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">161</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hull City</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: right;">217</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reading</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Brentford</td>
+<td style="text-align: right;">886</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">93</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oldham Athletic</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cardiff City</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">101</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bradford City</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Huddersfield Town</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">126</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Blackpool</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Barnsley</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Swindon Town</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>epldata_plot</span> <span class='op'>&lt;-</span> <span class='va'>epldata</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>points</span>, y <span class='op'>=</span> <span class='va'>sum_transfers</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Total Points"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Total Spent in Transfers (in Millions)"</span>,</span>
+<span>    title <span class='op'>=</span> <span class='st'>"Relationship between Performance and Total Money Spent by Clubs in EPL"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>epldata_plot</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
