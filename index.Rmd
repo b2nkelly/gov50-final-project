@@ -63,7 +63,7 @@ epldata_plot <- epldata |>
     y = "Total Spent in Transfers (in Millions)",
     title = "Relationship between Performance and Total Money Spent by Clubs in EPL") +
   geom_line()
-epldata_plot
+print(epldata_plot)
 ```
 
 ## Analysis
