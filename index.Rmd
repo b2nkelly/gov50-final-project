@@ -56,13 +56,6 @@ knitr::kable(epldata,
 ```
 
 ```{r}
-mtcars |>
-  ggplot(mapping = aes(x = mpg, y = cyl)) +
-  geom_point()
-```
-
-
-```{r}
 epldata_plot <- epldata |>
   ggplot(mapping = aes(x = points, y = sum_transfers)) +
   labs(
@@ -70,8 +63,9 @@ epldata_plot <- epldata |>
     y = "Total Spent in Transfers (in Millions)",
     title = "Relationship between Performance and Total Money Spent by Clubs in EPL") +
   geom_line()
-print(epldata_plot)
+print(epldata_plot) # print out
 ```
+
 
 ## Analysis
 
