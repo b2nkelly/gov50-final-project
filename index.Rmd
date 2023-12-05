@@ -23,6 +23,7 @@ In the world of soccer, is there a direct correlation between money spent by clu
 
 ```{r}
 library(tidyverse)
+library(ggplot2)
 
 club <- c(
   "Man United", "Arsenal", "Liverpool", "Chelsea", "Tottenham", "Man City", "Everton", "Newcastle United", "Aston Villa", "West Ham", "Southampton", "Blackburn", "Leicester City", "Leeds United", "Fulham", "Middlesbrough", "Crystal Palace", "Sunderland", "Bolton", "West Brom", "Stoke City", "Coventry City", "Norwich City", "Wolverhampton", "Sheffield Wednesday", "Wimbledon", "Charlton Athletic", "Wigan Athletic", "Burnley", "Swansea City", "QPR", "Portsmouth", "Birmingham City", "Brighton", "Nottingham Forrest", "Watford", "Derby County", "Bournemouth", "Ipswich Town", "Sheffield United", "Hull City", "Reading", "Brentford", "Oldham Athletic", "Cardiff City", "Bradford City", "Huddersfield Town", "Blackpool", "Barnsley", "Swindon Town")
