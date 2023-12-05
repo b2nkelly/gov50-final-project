@@ -56,6 +56,13 @@ knitr::kable(epldata,
 ```
 
 ```{r}
+mtcars |>
+  ggplot(mapping = aes(x = mpg, y = cyl)) +
+  geom_point()
+```
+
+
+```{r}
 epldata_plot <- epldata |>
   ggplot(mapping = aes(x = points, y = sum_transfers)) +
   labs(
