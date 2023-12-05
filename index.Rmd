@@ -62,12 +62,22 @@ epldata_plot <- epldata |>
     x = "Total Points",
     y = "Total Spent in Transfers (in Millions)",
     title = "Relationship between Performance and Total Money Spent by Clubs in EPL") +
-  geom_line()
+  geom_point() +
+  geom_smooth(method = "lm")
 print(epldata_plot) # print out
+```
+
+```{r}
+library(modelsummary)
+modelsummary(lm(sum_transfers ~ points, data = epldata))
+
+summary(lm(sum_transfers ~ points, data = epldata))
 ```
 
 
 ## Analysis
 
 In the graph above, we are comparing total money spent on transfers and total points since 1992. Total money spent on transfers is the total amount of money, in millions, spent on new players by a club. Total points is calculated by adding three points for a win, one point for a draw, and zero points for a loss. As seen in the graph, on average, there is a positive correlation between money spent on transfers and total points. There are of course some outliers like Arsenal, Chelsea, and Man City. Arsenal has the second-most total points despite only spending 2.496 billion on transfers. While this may seem like a lot, compared to the other teams with similar amounts of total points. Chelsea has spent the most money on transfers out of every premier league club since 1992, however, they have only the fourth-most total points. And finally, Man City has spent the second-most on transfers while only having the sixth-most total points. A reason to explain this is because of transfer inflation. Both Chelsea and Man City came into riches recently, meaning that they have been spending money, translating into success within the last 15-20 years. Because of transfer inflation, players have been getting sold for more and more money as time has gone on, meaning that both Chelsea and Man City have been buying players at a higher price since they came into money recently. This has translated to success in the more recent years, however, before their new owners came in with lots of money to spend, both of these clubs struggled to perform as well as other clubs with more money relative to the time period. Arsenal is the inverse case in this situation, as they were very successful in the 1990s and 2000s, when players costed much less to acquire. They collected most of their points in this time period where they were able to buy the best players at the time for a much lower price than Chelsea and Man City are spending on the best players now. Because of this, they were very successful in those early years of the Premier League without having to spend too much money compared to what teams spend now. Ultimately, the explanation for why these outliers exist supports the fact that there is a positive correlation between money spent on transfers and total points.
+
+Additionally, a p-value of < 2.2 x 10^-16 indicates that, under the null hypothesis of there being no relationship between total points and total money spent on transfers, we would expect to observe a coefficient on points of 1.48696 as or more extreme than our observed value with probability of < 2.2 x 10^-16. This shows that the null hypothesis of there being no relationship between total points and total money spent on transfers is extremely unlikely, ultimately showing that the positive correlation between these two variables is likely not due to chance or coincidence.
 
